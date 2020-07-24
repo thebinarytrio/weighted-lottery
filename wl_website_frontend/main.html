@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    
+</head>
+<body>
+    <h1>List of all Reservations</h1>
+    <div>
+        <h2>Reservation Table</h2>
+        <table class="events" border="2">
+           
+            <tr>
+                <th>UserID</th>
+                <th>Username</th>
+                <th>Reservation Name </th>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>Juan23</td>
+                <td>Lehman College Hackathon</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Yasirisortiz</td>
+                <td>Codelabs Summit </td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>DallasJ</td>
+                <td>Queens College Career Fair</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>Jhonsmith</td>
+                <td>Island Trading</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>Mery90</td>
+                <td>Women in Tech Summer Program </td>
+            </tr>
+        </table>
+    </div>
+
+    <form class="modal-form" action="">
+        <div class="container">
+            <h1>Reservation Page</h1>
+            <p>Please fill in this form to register for an event.</p>
+            <label for="first-name"><b>First Name</b></label>
+            <input type="text" placeholder="First Name" name="first_name" required>
+            <br>
+            <label for="last-name"><b>Last Name</b></label>
+            <input type="text" placeholder="Last Name" name="second_name" required>
+            <br>
+            <label for="username"><b>Username</b></label>
+            <input type="text" placeholder="Enter Username" name="email" required>
+            <br>
+            <label for="email"><b>Email</b></label>
+            <input type="text" placeholder="Enter Email" name="email" required>
+        </div>
+        <br>
+        <div>
+            <label for="tickets">Select Tickets</label required>
+            <select name="tickets" id="tickets">
+                <option value=""> </option>
+                <option value="0">0</option>
+                <option value="1">1</option>
+            </select>
+            <br><br>
+        
+            <label for="events">Select Event</label>
+            <select name="events" id="events" required>
+                <option style="display:none;"></option>
+                <option value="event0"></option>
+                <option value="event1">Lehman College Hackathon</option>
+                <option value="event2">Codelabs Summit</option>
+                <option value="event3">Queens College Career Fair</option>
+                <option value="event4">Island Trading</option>
+                <option value="event5">Women in Tech Summer Program</option>
+                <option value="event6">Modeling for Good </option>
+                <option value="event6">Other</option>
+            </select>
+            <br><br>
+            <label> If other </label><input type="text" placeholder="Enter Event Name">
+            <br><br>
+            <!-- create submit botton -->
+            <button type="button"> Make a Reservation</button>
+        </div>
+        <div>
+            <h3>Winners</h3>
+            <button type="button"> Run  Lottery</button>
+        </div>
+    </form>
+
+   
+    
+</body>
+</html>
