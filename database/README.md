@@ -4,7 +4,7 @@ Directory that contains dockerfile and database file
 
 remove lottery-db container (to prevent errors if it was previous running):
 
-###'docker container rm -f lottery-db'
+### `docker container rm -f lottery-db`
 
 #build image with tag name lottery-db
 ### 'docker build . -t lottery-db:latest'
