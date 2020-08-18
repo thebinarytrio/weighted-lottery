@@ -18,6 +18,5 @@ docker run -d --name lottery-db -p 127.0.0.1:3306:3306 lottery-db
 
 #docker logs -f lottery-db
 
-
 # NOTE: Trouble getting container to work property after the first build,
 # after building and running twice, everything is normal 
