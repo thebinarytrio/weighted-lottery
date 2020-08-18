@@ -1,9 +1,10 @@
 Directory that contains dockerfile and database file
 
-How to run MySQL in docker with the following commands:
+## How to run MySQL in docker with the following commands- 
 
-#remove lottery-db container (to prevent errors if it was previous running)
-### 'docker container rm -f lottery-db'
+remove lottery-db container (to prevent errors if it was previous running):
+
+###'docker container rm -f lottery-db'
 
 #build image with tag name lottery-db
 ### 'docker build . -t lottery-db:latest'
