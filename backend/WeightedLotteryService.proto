@@ -1,0 +1,15 @@
+package lotteryService;
+
+message AllEventsRequest {
+
+}
+
+message AllEventsResponse {
+
+}
+
+service LotteryService {
+    rpc AllEvents (AllEventsRequest) returns (AllEventsResponse) {
+
+    }
+}   
