@@ -3,15 +3,15 @@ CREATE DATABASE lottery;
 USE lottery;
 
 /*all peopple that created an account*/
-CREATE TABLE users (
+CREATE TABLE `users` (
     userid INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY, 
-    username VARCHAR(100) NOT NULL,
-    user_organization VARCHAR(100),
-    user_email VARCHAR(100) NOT NULL
+    username VARCHAR(100) NOT NULL
+    /* user_organization VARCHAR(100),
+    user_email VARCHAR(100) NOT NULL */ 
 );
 
 /*event table*/ 
-CREATE TABLE events ( 
+CREATE TABLE `events` ( 
     event_id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
     event_name VARCHAR(100) NOT NULL,
     event_description VARCHAR(100) NOT NULL,
@@ -47,3 +47,6 @@ CREATE TABLE eventAttendance(
     FOREIGN KEY (attendee) REFERENCES attendee(attendeeid) ON UPDATE CASCADE ON DELETE CASCADE,
     FOREIGN KEY (event_id) REFERENCES events(event_id) ON UPDATE CASCADE ON DELETE CASCADE
 );
+
+/* Test data */
+/*INSERT INTO users username VALUES ('marianne');*/
