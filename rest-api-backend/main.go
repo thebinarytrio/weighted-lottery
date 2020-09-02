@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"net/http"
 
 	_ "github.com/go-sql-driver/mysql"
@@ -35,6 +36,10 @@ func main() {
 
 	router.HandleFunc("/", homePage)
 	router.HandleFunc("/users", getUsers).Methods("GET")
+	router.HandleFunc("/users", createUser).Methods("POST")
+	router.HandleFunc("/users/{userid}", getUser).Methods("GET")
+	router.HandleFunc("/users/{userid}", updateUser).Methods("PUT")
+	router.HandleFunc("/users/{userid}", deleteUser).Methods("DELETE")
 
 	// creating connection to local browser
 	http.ListenAndServe(":30000", router)
@@ -75,4 +80,98 @@ func getUsers(w http.ResponseWriter, r *http.Request) {
 	// encodes users array into JSON string
 	json.NewEncoder(w).Encode(users)
 	fmt.Println("Endpoint Hit: getUsers")
+}
+
+func createUser(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+
+	stmt, err := db.Prepare("INSERT INTO `users`(username) VALUES(?)")
+	if err != nil {
+		panic(err.Error())
+	}
+
+	body, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		panic(err.Error())
+	}
+
+	keyVal := make(map[string]string)
+	json.Unmarshal(body, &keyVal)
+	username := keyVal["username"]
+
+	_, err = stmt.Exec(username)
+	if err != nil {
+		panic(err.Error())
+	}
+
+	fmt.Fprintf(w, "New post was created")
+	fmt.Println("Endpoint Hit: createUser")
+}
+
+func getUser(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	params := mux.Vars(r)
+
+	result, err := db.Query("SELECT userid, username FROM `users` WHERE userid = ?", params["userid"])
+	if err != nil {
+		panic(err.Error())
+	}
+
+	defer result.Close()
+
+	var user Users
+
+	for result.Next() {
+		err := result.Scan(&user.Userid, &user.Username)
+		if err != nil {
+			panic(err.Error())
+		}
+	}
+
+	json.NewEncoder(w).Encode(user)
+	fmt.Println("Endpoint Hit: getUser")
+}
+
+func updateUser(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+
+	stmt, err := db.Prepare("UPDATE `users` SET username = ? WHERE userid = ?")
+	if err != nil {
+		panic(err.Error())
+	}
+
+	body, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		panic(err.Error())
+	}
+
+	keyVal := make(map[string]string)
+	json.Unmarshal(body, &keyVal)
+	newUser := keyVal["username"]
+
+	_, err = stmt.Exec(newUser, params["userid"])
+	if err != nil {
+		panic(err.Error())
+	}
+
+	fmt.Fprintf(w, "User with ID = %s was updated", params["userid"])
+	fmt.Println("Endpoint Hit: updateUser")
+}
+
+func deleteUser(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	params := mux.Vars(r)
+
+	stmt, err := db.Prepare("DELETE FROM `users` WHERE userid = ?")
+	if err != nil {
+		panic(err.Error())
+	}
+
+	_, err = stmt.Exec(params["userid"])
+	if err != nil {
+		panic(err.Error())
+	}
+
+	fmt.Fprintf(w, "User with ID =%s was deleted", params["userid"])
+	fmt.Println("Endpoint Hit: deleteUser")
 }
