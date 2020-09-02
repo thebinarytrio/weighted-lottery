@@ -49,4 +49,6 @@ CREATE TABLE eventAttendance(
 );
 
 /* Test data */
-/*INSERT INTO users username VALUES ('marianne');*/
+INSERT INTO `users` (username) VALUES ('marianne');
+INSERT INTO `users` (username) VALUES ('Sherry');
+INSERT INTO `users` (username) VALUES ('Yasiris');
