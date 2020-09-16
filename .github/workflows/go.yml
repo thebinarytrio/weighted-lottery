@@ -24,4 +24,5 @@ jobs:
       - uses: actions/checkout@master
       - name: go formatting
         uses: grandcolline/golang-github-actions@v1.1.0
-        run: fmt
+        with:
+          run: fmt
