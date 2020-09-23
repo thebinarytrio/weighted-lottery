@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"net/http"
 
 	_ "github.com/go-sql-driver/mysql"
@@ -26,7 +27,7 @@ func main() {
 	db, err = sql.Open("mysql", "root:@/lottery")
 
 	if err != nil {
-		panic(err.Error())
+		log.Fatal(err)
 	}
 
 	defer db.Close()
@@ -61,7 +62,7 @@ func getUsers(w http.ResponseWriter, r *http.Request) {
 	// query returns the rows of the database
 	result, err := db.Query("SELECT * FROM `users`")
 	if err != nil {
-		panic(err.Error())
+		log.Fatal(err)
 	}
 
 	defer result.Close()
@@ -72,7 +73,7 @@ func getUsers(w http.ResponseWriter, r *http.Request) {
 		var user Users
 		err := result.Scan(&user.Userid, &user.Username)
 		if err != nil {
-			panic(err.Error())
+			log.Fatal(err)
 		}
 		users = append(users, user)
 	}
@@ -87,12 +88,12 @@ func createUser(w http.ResponseWriter, r *http.Request) {
 
 	stmt, err := db.Prepare("INSERT INTO `users`(username) VALUES(?)")
 	if err != nil {
-		panic(err.Error())
+		log.Fatal(err)
 	}
 
 	body, err := ioutil.ReadAll(r.Body)
 	if err != nil {
-		panic(err.Error())
+		log.Fatal(err)
 	}
 
 	keyVal := make(map[string]string)
@@ -101,7 +102,7 @@ func createUser(w http.ResponseWriter, r *http.Request) {
 
 	_, err = stmt.Exec(username)
 	if err != nil {
-		panic(err.Error())
+		log.Fatal(err)
 	}
 
 	fmt.Fprintf(w, "New post was created")
@@ -114,7 +115,7 @@ func getUser(w http.ResponseWriter, r *http.Request) {
 
 	result, err := db.Query("SELECT userid, username FROM `users` WHERE userid = ?", params["userid"])
 	if err != nil {
-		panic(err.Error())
+		log.Fatal(err)
 	}
 
 	defer result.Close()
@@ -124,7 +125,7 @@ func getUser(w http.ResponseWriter, r *http.Request) {
 	for result.Next() {
 		err := result.Scan(&user.Userid, &user.Username)
 		if err != nil {
-			panic(err.Error())
+			log.Fatal(err)
 		}
 	}
 
@@ -137,12 +138,12 @@ func updateUser(w http.ResponseWriter, r *http.Request) {
 
 	stmt, err := db.Prepare("UPDATE `users` SET username = ? WHERE userid = ?")
 	if err != nil {
-		panic(err.Error())
+		log.Fatal(err)
 	}
 
 	body, err := ioutil.ReadAll(r.Body)
 	if err != nil {
-		panic(err.Error())
+		log.Fatal(err)
 	}
 
 	keyVal := make(map[string]string)
@@ -151,7 +152,7 @@ func updateUser(w http.ResponseWriter, r *http.Request) {
 
 	_, err = stmt.Exec(newUser, params["userid"])
 	if err != nil {
-		panic(err.Error())
+		log.Fatal(err)
 	}
 
 	fmt.Fprintf(w, "User with ID = %s was updated", params["userid"])
@@ -164,12 +165,12 @@ func deleteUser(w http.ResponseWriter, r *http.Request) {
 
 	stmt, err := db.Prepare("DELETE FROM `users` WHERE userid = ?")
 	if err != nil {
-		panic(err.Error())
+		log.Fatal(err)
 	}
 
 	_, err = stmt.Exec(params["userid"])
 	if err != nil {
-		panic(err.Error())
+		log.Fatal(err)
 	}
 
 	fmt.Fprintf(w, "User with ID =%s was deleted", params["userid"])
