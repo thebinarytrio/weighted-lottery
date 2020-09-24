@@ -1,17 +1,27 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-import ReservationTable from './components/ReservationTable';
-import ReservationPage from './components/ReservationPage';
+import { Switch, Route } from "react-router-dom";
 
-function App() {
+
+
+//Views here
+import Home from "./views/Home.view"
+// import Reservation from "./views/Reservation.view"
+
+//Css
+import './css/App.css'
+import './css/Menu/Navegation.css'
+import './css/ReservationPage.css'
+
+
+function App(props) {
+  console.log(props)
   return (
-    <div className="App">
-     <ReservationTable/>
-     <ReservationPage/>
-     
-    </div>
-  );
+    <Switch>
+      <Route exact path="/" component={Home}/>
+      
+    </Switch>
+   
+  )
 }
 
-export default App;
+export default App
