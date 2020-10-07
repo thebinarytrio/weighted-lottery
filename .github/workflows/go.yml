@@ -16,7 +16,7 @@ jobs:
         with:
           go-version: '1.14.0'
       - name: build
-        workspace: weighted-lottery/rest-api-backend/main.go
+        workspace: "weighted-lottery/rest-api-backend/main.go"
         run: go build -o weighted-lotty
   gofmt:
     runs-on: ubuntu-latest
